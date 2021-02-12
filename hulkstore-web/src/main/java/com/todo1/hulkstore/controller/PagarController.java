@@ -27,8 +27,8 @@ public class PagarController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private UsuarioBean usuarioBean;
-	
+	private UsuarioSesionController usuarioSesion;
+
 	@Inject
 	private CarritoController carritoCOntroller;
 	
@@ -38,18 +38,15 @@ public class PagarController implements Serializable {
 	@Inject
 	private TiendaBean tiendaBean;
 	
-	private Usuario usuario;
-	
-	private boolean usuarioLogeado;
+
+
 	
 	@PostConstruct
 	public void init() {
-		verificarUsuarioLogeado();
-	}
-	
-	public void verificarUsuarioLogeado() {
 		
 	}
+	
+	
 	
 	public String realizarCompra() {
 		Map<Long, ProductoTo> mapProductoCarrito = carritoCOntroller.getMapProductoCarrito();

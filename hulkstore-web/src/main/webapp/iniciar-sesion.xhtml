@@ -32,8 +32,8 @@
 				<h:commandButton class="btn btn-outline-primary boton-aceptar"
 					id="btnIngresar" action="#{iniciarSesionController.iniciarSesion}"
 					value="Ingresar" />
-				<h:commandButton class="btn btn-outline-success boton-cancelar"
-					id="btnRegistrase" value="Registrarse" action="registrarse.xhtml" />
+				<h:link value="Registrarse" outcome="registrarse"
+                                class="btn btn-outline-danger boton-cancelar" />
 			</div>
 
 		</h:form>

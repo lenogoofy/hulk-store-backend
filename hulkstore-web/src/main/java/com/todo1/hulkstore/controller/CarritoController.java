@@ -1,5 +1,6 @@
 package com.todo1.hulkstore.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -37,6 +38,9 @@ public class CarritoController implements Serializable {
 
 	@Inject
 	private TiendaBean tiendaBean;
+	
+	@Inject
+	private UsuarioSesionController usuarioSesion;
 
 	private Map<Long, ProductoTo> mapProductoCarrito;
 
@@ -70,33 +74,46 @@ public class CarritoController implements Serializable {
 		montoTotal = montoTotal.add(producto.getPrecio());
 	}
 
-	public String realizarCompra() {
-		String mensajeError = null;
-		if (Objects.nonNull(mapProductoCarrito) && !mapProductoCarrito.isEmpty()) {
-			for (ProductoTo productoTo : mapProductoCarrito.values()) {
-				PedidoTo pedidoTo = inicializar();
-				pedidoTo.setUsuarioId(2L);
-				pedidoTo.setProductoId(productoTo.getProductoId());
-				pedidoTo.setCantidad(productoTo.getCantidad());
-				pedidoTo.setSubtotal(productoTo.getSubTotal());
-				try {
-					tiendaBean.comprarProductos(pedidoTo);
-				} catch (NoGuardadoExcepcion e) {
-					mensajeError = e.getMessage();
-					break;
-				}
-			}
-			if (Objects.nonNull(mensajeError)) {
-				FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesUtil.ERROR, mensajeError);
+	public void realizarCompra() {
+		if(!usuarioSesion.verificarUsuarioLogeado()) {
+			try {
+				facesContext.getExternalContext().redirect("iniciar-sesion.xhtml");
+			} catch (IOException e) {
+				FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesUtil.ERROR, "No funciona la url.");
 				facesContext.addMessage(null, m);
 			}
-			init();
-			return "index.xhtml";
 		} else {
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, ConstantesUtil.INFO,
-					"No existe productos para comprar.");
-			facesContext.addMessage(null, m);
-			return null;
+			String mensajeError = null;
+			if (Objects.nonNull(mapProductoCarrito) && !mapProductoCarrito.isEmpty()) {
+				for (ProductoTo productoTo : mapProductoCarrito.values()) {
+					PedidoTo pedidoTo = inicializar();
+					pedidoTo.setUsuarioId(usuarioSesion.getUsuarioTo().getCodigo());
+					pedidoTo.setProductoId(productoTo.getProductoId());
+					pedidoTo.setCantidad(productoTo.getCantidad());
+					pedidoTo.setSubtotal(productoTo.getSubTotal());
+					try {
+						tiendaBean.comprarProductos(pedidoTo);
+					} catch (NoGuardadoExcepcion e) {
+						mensajeError = e.getMessage();
+						break;
+					}
+				}
+				if (Objects.nonNull(mensajeError)) {
+					FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesUtil.ERROR, mensajeError);
+					facesContext.addMessage(null, m);
+				}
+				init();
+				try {
+					facesContext.getExternalContext().redirect("index.xhtml");
+				} catch (IOException e) {
+					FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesUtil.ERROR, "No funciona la url.");
+					facesContext.addMessage(null, m);
+				}
+			} else {
+				FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, ConstantesUtil.INFO,
+						"No existe productos para comprar.");
+				facesContext.addMessage(null, m);
+			}
 		}
 	}
 
@@ -122,7 +139,12 @@ public class CarritoController implements Serializable {
 	public PedidoTo inicializar() {
 		return new PedidoTo();
 	}
-	public String verCarrito() {
-		return "carrito.xhtml";
+	public void verCarrito() {
+		try {
+			facesContext.getExternalContext().redirect("carrito.xhtml");
+		} catch (IOException e) {
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesUtil.ERROR, "No funciona la url.");
+			facesContext.addMessage(null, m);
+		}
 	}
 }

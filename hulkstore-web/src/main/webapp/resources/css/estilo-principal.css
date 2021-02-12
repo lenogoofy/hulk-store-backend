@@ -33,10 +33,10 @@ a ul, a li{
 /* Grupo botones */
 
 .boton-aceptar {
-    padding-right: 1rem !important;
+    margin-right: 1rem !important;
 }
 .boton-cancelar {
-    padding-left: 1rem !important;
+    margin-left: 1rem !important;
 }
 .boton-carrito {
     margin-bottom: 1rem !important;
