@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="content">
+        <div class="row">
+            <h1>Listado de productos</h1>
+        </div>
+        <h:form>
+            <div class="row">
+                <h:commandButton id="btnNuevo" value="Nuevo" action="producto-nuevo"/>
+            </div>
+            <div class="row">
+                <p:dataTable class="table table-striped" var="producto"
+                    value="#{productoController.listaProducto}" rows="10" paginator="true"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15">
+                    <p:column class="thead-inverse" headerText="Id">
+                        <h:outputText value="#{producto.productoId}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{producto.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{producto.cantidad}" />
+                    </p:column>
+
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{producto.precio}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>

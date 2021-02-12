@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/inicio.xhtml">
+	<ui:define name="content">
+
+		<h:form class="form-horizontal" role="form">
+			<div class="form-group row">
+				<h:outputLabel class="col-lg-2 col-form-label" for="nombre"
+					value="Nombre" />
+				<div class="col-10">
+					<h:inputText class="form-control" id="nombre"
+						value="#{registrarseController.nombre}" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<h:outputLabel class="col-lg-2 col-form-label" for="email"
+					value="Correo electrónico" />
+				<div class="col-10">
+					<h:inputText class="form-control" id="email"
+						value="#{registrarseController.email}" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<h:outputLabel class="col-lg-2 col-form-label" for="contrasenia"
+					value="Contraseña" />
+				<div class="col-10">
+					<h:inputText class="form-control" id="contrasenia"
+						value="#{registrarseController.contrasenia}" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<h:outputLabel class="col-lg-2 col-form-label" for="celular"
+					value="Celular" />
+				<div class="col-10">
+					<h:inputText class="form-control" id="celular"
+						value="#{registrarseController.celular}" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<h:commandButton class="btn btn-outline-primary boton-aceptar"
+					id="btnRegistrar" action="#{registrarseController.registrar}"
+					value="Registrar" />
+				<h:commandButton class="btn btn-outline-danger boton-cancelar"
+					id="btnCancelar" value="Cancelar" action="iniciar-sesion" />
+			</div>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -21,7 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import lombok.Data;
 @Entity
 @XmlRootElement
-@Table(name = "Usuario", uniqueConstraints = @UniqueConstraint(columnNames = "identificacion"))
+@Table(name = "Usuario", uniqueConstraints = @UniqueConstraint(columnNames = "correo"))
 @Data
 public class Usuario implements Serializable {
 
@@ -38,15 +37,12 @@ public class Usuario implements Serializable {
 	private String nombre;
 
 	@NotNull
-	@Size(min = 10, max = 13)
-	@Digits(fraction = 0, integer = 13)
-	private String identificacion;
-
-	@NotNull
 	@NotEmpty
 	@Email
 	private String correo;
 
 	private String celular;
+	
+	private String contrasenia;
 	
 }

@@ -19,10 +19,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.todo1.hulkstore.util.CustomLocalDateTimeSerializer;
-
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author lenin
@@ -31,7 +29,8 @@ import lombok.Data;
 @Entity
 @XmlRootElement
 @Table(name = "Producto", uniqueConstraints = @UniqueConstraint(columnNames = "nombre"))
-@Data
+@Setter
+@Getter
 public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 6112284190531498704L;
@@ -45,6 +44,9 @@ public class Producto implements Serializable {
 	@Size(min = 1, max = 60)
 	private String nombre;
 	
+	@Size(min = 1, max = 255)
+	private String descripcion;
+	
 	@NotNull
     @Digits(fraction = 0, integer = 4)    
 	private Long cantidad;
@@ -53,10 +55,14 @@ public class Producto implements Serializable {
     @Digits(fraction = 2, integer = 4)   
 	private BigDecimal precio;
 	
-	@JsonSerialize(using = CustomLocalDateTimeSerializer.class)
 	@Column(name = "fecha_ingreso")
 	private LocalDateTime fechaIngreso;
 	
 	private String estado;
+	
+	public Producto() {
+		fechaIngreso = LocalDateTime.now();
+		estado = "ACT";
+	}
 	
 }

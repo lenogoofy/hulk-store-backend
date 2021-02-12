@@ -1,5 +1,6 @@
 package com.todo1.hulkstore.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,7 +12,7 @@ import javax.persistence.criteria.Root;
 
 import com.todo1.hulkstore.excepcion.NoGuardadoExcepcion;
 
-public class GenericoDao<T> {
+public class GenericoDao<T, I extends Serializable> {
 
 	@Inject
 	protected EntityManager em;

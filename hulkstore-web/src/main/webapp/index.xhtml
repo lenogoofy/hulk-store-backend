@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<h1>Hulk Store</h1>
+		</div>
+
+		<h:form id="form">
+			<h:panelGroup rendered="#{empty productoController.listaProducto}">
+				<em>No registered members.</em>
+			</h:panelGroup>
+			<div class="row boton-carrito">
+				
+			</div>
+
+			<div class="card">
+
+				<p:dataView var="producto"
+					value="#{productoController.listaProducto}" rows="12"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid"
+					gridRowStyleClass="p-lg-6 p-xl-4" flex="true">
+
+					<p:dataViewGridItem>
+						<div class="product-grid-item card border-1">
+							<div class="product-grid-item-content">
+								<div class="product-name">#{producto.nombre}</div>
+								<div class="product-description">#{producto.descripcion}</div>
+							</div>
+							<div class="product-grid-item-bottom">
+								<h:outputText value="#{producto.precio}"
+									styleClass="product-price">
+									<f:convertNumber currencySymbol="$" type="currency" />
+								</h:outputText>
+							</div>
+							<div class="product-grid-item-bottom">
+								<p:commandButton update=":form:productDetail"
+									value="Vista rápida" 
+									oncomplete="PF('productDialog').show()" 
+									title="View">
+									<f:setPropertyActionListener value="#{producto}"
+										target="#{productoController.productoSeleccionado}" />
+								</p:commandButton>
+							</div>
+							<div class="product-grid-item-content">
+								<a
+									href="#{request.contextPath}/rest/productos/#{producto.productoId}">/rest/productos/#{producto.productoId}</a>
+							</div>
+						</div>
+					</p:dataViewGridItem>
+
+					<p:dataViewListItem>
+						<div class="product-list-item">
+							<div class="product-list-detail">
+								<div class="product-name">#{producto.nombre}</div>
+								<div class="product-description">#{producto.descripcion}</div>
+							</div>
+							<div class="product-list-action">
+								<h:outputText value="#{producto.precio}"
+									styleClass="product-price">
+									<f:convertNumber currencySymbol="$" type="currency" />
+								</h:outputText>
+							</div>
+                            <div class="product-grid-item-bottom">
+								<p:commandButton update=":form:productDetail"
+                                    value="Vista rápida" 
+                                    oncomplete="PF('productDialog').show()" 
+                                    title="View">
+                                    <f:setPropertyActionListener value="#{producto}"
+                                        target="#{productoController.productoSeleccionado}" />
+                                </p:commandButton>
+							</div>
+						</div>
+					</p:dataViewListItem>
+				</p:dataView>
+
+				<p:dialog header="Product Info" widgetVar="productDialog"
+					modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="productDetail" style="text-align:center;">
+						<p:column
+							rendered="#{not empty productoController.productoSeleccionado}">
+							<div class="product">
+								<div class="product-grid-item card" style="margin-bottom: 0">
+									<div class="product-grid-item-content">
+										<div class="product-name">#{productoController.productoSeleccionado.nombre}</div>
+										<div class="product-description">#{productoController.productoSeleccionado.descripcion}</div>
+									</div>
+									<div class="product-grid-item-bottom">
+										<h:outputText
+											value="#{productoController.productoSeleccionado.precio}"
+											styleClass="product-price">
+											<f:convertNumber currencySymbol="$" type="currency" />
+										</h:outputText>
+									</div>
+									<div class="product-grid-item-bottom">
+										<p:commandButton value="Añadir al carrito"
+											disabled="#{productoController.productoSeleccionado.estado == 'INA'}"
+											action="#{ productoController.obtenerProducto()}"
+											oncomplete="PF('productDialog').hide()">
+											<f:setPropertyActionListener
+												value="#{productoController.productoSeleccionado}"
+												target="#{productoController.productoSeleccionado}" />
+										</p:commandButton>
+									</div>
+								</div>
+							</div>
+						</p:column>
+					</p:outputPanel>
+				</p:dialog>
+			</div>
+			<div classs="row">
+				REST URL for all members: <a
+					href="#{request.contextPath}/rest/productos">/rest/productos</a>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

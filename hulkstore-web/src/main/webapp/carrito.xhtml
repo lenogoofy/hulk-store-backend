@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<h1>Hulk Store</h1>
+		</div>
+
+		<h:form id="form">
+			<div class="row">
+				<p:messages id="messages" showDetail="true" closable="true">
+					<p:autoUpdate />
+				</p:messages>
+				<h:panelGroup
+					rendered="#{empty carritoController.mapProductoCarrito}">
+					<div class="alert alert-info" role="alert">No existe
+						registros.</div>
+				</h:panelGroup>
+				<h:dataTable var="producto" class="table table-striped" id="dtProducto"
+					value="#{carritoController.mapProductoCarrito.entrySet().toArray()}"
+					rendered="#{not empty carritoController.mapProductoCarrito.entrySet().toArray()}">
+					<f:facet name="header">
+			        Lista de productos
+			    </f:facet>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
+						<h:outputText value="#{producto.value.nombre}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Cantidad</f:facet>
+	                #{producto.value.cantidad}
+	            </h:column>
+					<h:column>
+						<f:facet name="header">Precio #</f:facet>
+	                #{producto.value.precio}
+	            </h:column>
+	            <h:column>
+                        <f:facet name="header">Subtotal #</f:facet>
+                    #{producto.value.subTotal}
+                </h:column>
+
+					<h:column>
+						<f:facet name="header"></f:facet>
+						<h:commandButton value="Eliminar" action="#{carritoController.eliminarProducto(producto.value)}" 
+						              update=":form:dtProducto"/>
+					</h:column>
+					<f:facet name="footer">
+			           Monto total de la compra: #{carritoController.montoTotal}
+			    </f:facet>
+				</h:dataTable>
+			</div>
+			<div class="row container-fluid">
+				<p:commandButton value="Continuar comprando"
+					action="#{carritoController.irATienda}"
+					class="btn btn-outline-primary" />
+				<p:commandButton value="Pagar" class="btn btn-outline-success" action="#{carritoController.realizarCompra}"/>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

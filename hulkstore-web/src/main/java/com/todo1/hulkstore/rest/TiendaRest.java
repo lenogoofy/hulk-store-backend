@@ -1,5 +1,6 @@
 package com.todo1.hulkstore.rest;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import com.todo1.hulkstore.util.ConstantesUtil;
 
 @Path("/tienda")
 @RequestScoped
-public class TiendaRest {
+public class TiendaRest implements Serializable {
 
 	private static final long serialVersionUID = -2334366294949357626L;
 	

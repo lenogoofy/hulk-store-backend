@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+
+		<h:form class="form-horizontal" role="form">
+			<div class="form-group row">
+				<h:outputLabel class="col-lg-2 col-form-label" for="nombre"
+					value="Nombre" />
+				<div class="col-10">
+					<h:inputText class="form-control" id="nombre"
+						value="#{productoController.nombre}" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<h:outputLabel class="col-lg-2 col-form-label" for="cantidad"
+					value="Cantidad" />
+				<div class="col-4">
+					<h:inputText class="form-control" id="cantidad"
+						value="#{productoController.cantidad}">
+					   <f:validateLongRange minimum="1" />
+					</h:inputText>
+				</div>
+
+				<h:outputLabel class="col-lg-2 control-label" for="precio"
+					value="Precio" />
+				<div class="col-4">
+					<h:inputText class="form-control" id="precio"
+						value="#{productoController.precio}">
+						<f:validateLongRange minimum="1" />
+					</h:inputText>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<h:commandButton class="btn btn-outline-primary boton-aceptar"
+					id="btnRegistrar" action="#{productoController.registrar}"
+					value="Registrar" />
+				<h:commandButton class="btn btn-outline-danger boton-cancelar"
+					id="btnCancelar" value="Cancelar" action="producto-lista" />
+			</div>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

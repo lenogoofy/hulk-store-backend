@@ -32,7 +32,15 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 
-
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    
 	<dependencyManagement>
 		<dependencies>
 			<!-- Modulos del proyecto -->

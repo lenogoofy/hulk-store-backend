@@ -11,9 +11,11 @@ import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 
 import com.todo1.hulkstore.dao.UsuarioDao;
+import com.todo1.hulkstore.excepcion.ExisteResultadosExcepcion;
 import com.todo1.hulkstore.excepcion.NoExisteResultadosExcepcion;
 import com.todo1.hulkstore.excepcion.NoGuardadoExcepcion;
 import com.todo1.hulkstore.modelo.Usuario;
+import com.todo1.hulkstore.to.UsuarioTo;
 import com.todo1.hulkstore.util.ConstanteUtil;
 
 @Stateless
@@ -54,5 +56,17 @@ public class UsuarioBean implements Serializable {
 
 	public Usuario actualizarUsuario(Usuario usuario) {
 		return usuarioDao.actualizar(usuario);
+	}
+	
+	public UsuarioTo consultarUsuarioInicioSesion(String email, String contrasenia) throws NoExisteResultadosExcepcion {
+		UsuarioTo usuarioTo = usuarioDao.consultarUsuarioInicioSesion(email, contrasenia);
+		if(Objects.isNull(usuarioTo)) {
+			throw new NoExisteResultadosExcepcion(ConstanteUtil.NO_EXISTE_DATOS);
+		}
+		return usuarioTo;
+	}
+	
+	public boolean consultarCorreo(String email) {
+		return usuarioDao.consultarCorreo(email);
 	}
 }

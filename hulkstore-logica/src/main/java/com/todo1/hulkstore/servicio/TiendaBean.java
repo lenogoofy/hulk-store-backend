@@ -27,9 +27,6 @@ public class TiendaBean implements Serializable {
 	@Inject 
 	private PedidoDao pedidoDao;
 	
-	@Inject
-	private Logger logger;
-	
 	public void comprarProductos(PedidoTo pedidoTo) throws NoGuardadoExcepcion {
 		try {
 			Producto producto = productoBean.obtenerProductoPorId(pedidoTo.getProductoId());
@@ -38,11 +35,13 @@ public class TiendaBean implements Serializable {
 			}
 			Long cantidad = producto.getCantidad() - pedidoTo.getCantidad();
 			producto.setCantidad(cantidad);
+			if(cantidad <= 0) {
+				producto.setEstado("INA");
+			}
 			productoBean.actualizarProducto(producto);
 			pedidoDao.crear(crearPedido(pedidoTo));
 		} catch (NoGuardadoExcepcion | NoExisteResultadosExcepcion e) {
-			logger.severe(e.getMessage());
-			throw new NoGuardadoExcepcion(ConstanteUtil.NO_GUARDO);
+			throw new NoGuardadoExcepcion(e);
 		}
 	}
 	

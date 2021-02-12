@@ -1,15 +1,13 @@
 package com.todo1.hulkstore.dao;
 
-import java.io.Serializable;
+import java.math.BigInteger;
 
 import javax.ejb.Stateless;
 
 import com.todo1.hulkstore.modelo.Producto;
 
 @Stateless
-public class ProductoDao extends GenericoDao<Producto> implements Serializable {
-
-	private static final long serialVersionUID = 7375177647725230918L;
+public class ProductoDao extends GenericoDao<Producto, BigInteger> {
 
 	public ProductoDao() {
 		super(Producto.class);

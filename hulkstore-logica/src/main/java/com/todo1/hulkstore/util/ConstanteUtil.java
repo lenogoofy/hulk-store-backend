@@ -5,6 +5,7 @@ public final  class ConstanteUtil {
 	public static final String NO_EXISTE_DATOS = "No se encontraron datos para la consulta realizada.";
 	public static final String NO_GUARDO = "Error al insertar el registro.";
 	public static final String CANTIDAD_MAYOR = "La cantidad es mayor a la disponible.";
+	public static final String EXISTE_DATOS = "Correo ya registrado.";
 
 	private ConstanteUtil() {
 		throw new IllegalStateException("Clase util");
