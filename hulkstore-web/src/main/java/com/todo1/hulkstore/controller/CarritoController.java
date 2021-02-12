@@ -122,4 +122,7 @@ public class CarritoController implements Serializable {
 	public PedidoTo inicializar() {
 		return new PedidoTo();
 	}
+	public String verCarrito() {
+		return "carrito.xhtml";
+	}
 }
